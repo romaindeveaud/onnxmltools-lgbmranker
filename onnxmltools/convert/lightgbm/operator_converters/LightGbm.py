@@ -555,7 +555,7 @@ def convert_lightgbm(scope, operator, container):
     elif gbm_text["objective"].startswith("multiclass"):
         n_classes = gbm_text["num_class"]
         attrs["post_transform"] = "SOFTMAX"
-    elif gbm_text["objective"].startswith(("regression", "quantile")):
+    elif gbm_text["objective"].startswith(("regression", "quantile", "lambdarank")):
         n_classes = 1  # Regressor has only one output variable
         attrs["post_transform"] = "NONE"
         attrs["n_targets"] = n_classes
@@ -1027,4 +1027,5 @@ def convert_lgbm_zipmap(scope, operator, container):
 
 register_converter("LgbmClassifier", convert_lightgbm)
 register_converter("LgbmRegressor", convert_lightgbm)
+register_converter("LgbmRanker", convert_lightgbm)
 register_converter("LgbmZipMap", convert_lgbm_zipmap)
